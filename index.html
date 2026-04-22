@@ -2,87 +2,175 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Por los siglos de los siglos | Desasosiego</title>
     <style>
-        /* Estética General: Cine & Jazz */
+        /* PALETA: Tinta, Papel Envejecido, Rojo Vino y Negro Noir */
+        :root {
+            --paper: #e8e2d4;
+            --ink: #1a1a1a;
+            --wine: #7b1113;
+            --blue-ink: #1e2a44;
+            --window-bg: #d9d4c7;
+        }
+
         body {
-            background-color: #0a0a0a; /* Negro profundo */
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); /* Grano de película */
-            color: #d4d4d4;
-            font-family: 'Courier New', Courier, monospace; /* Fuente tipo guion de cine */
+            background-color: var(--ink);
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+                url('https://www.transparenttextures.com/patterns/stardust.png'); /* Grano de película */
+            color: var(--paper);
+            font-family: 'Courier New', Courier, monospace;
             margin: 0;
-            overflow-x: hidden;
+            overflow: hidden; /* Evita scroll para simular escritorio */
+            height: 100vh;
+            cursor: url('https://cur.cursors-4u.net/others/oth-2/oth191.cur'), auto;
         }
 
-        /* Ventana con estilo Rock/Noir */
-        .window {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            box-shadow: 10px 10px 0px #000;
-            width: 350px;
-            position: absolute;
-            top: 100px;
-            left: 50px;
-            z-index: 2;
-        }
-
-        .window-header {
-            background: #b02a2a; /* Rojo oscuro (Rock/Vino) */
-            color: white;
-            padding: 5px;
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .window-content {
-            padding: 15px;
-            border-top: 1px solid #333;
-        }
-
-        /* Elemento de música (Bossa/Jazz vibe) */
-        .now-playing {
+        /* CAPA DE RUIDO CINEMATOGRÁFICO */
+        body::before {
+            content: "";
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            border: 1px dashed #555;
-            padding: 10px;
-            font-size: 11px;
-            background: rgba(0,0,0,0.8);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url(https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Grain.vis.png);
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 999;
         }
 
-        /* Efecto de dibujo/arte */
-        .sketch-placeholder {
-            border: 1px solid #444;
-            filter: grayscale(1) contrast(1.2); /* Efecto Noir para tus dibujos */
-            margin-top: 10px;
+        /* VENTANAS ESTILO RETRO-NOIR */
+        .window {
+            position: absolute;
+            background: var(--window-bg);
+            border: 2px solid #fff;
+            border-right-color: #444;
+            border-bottom-color: #444;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+            color: var(--ink);
+            padding: 2px;
         }
 
-        a { color: #b02a2a; text-decoration: none; }
-        a:hover { background: #fff; color: #000; }
+        .header {
+            background: linear-gradient(90deg, var(--blue-ink), var(--wine));
+            color: white;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
+        .content {
+            padding: 15px;
+            border: 1px inset #fff;
+            background: var(--paper);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        /* POSICIONAMIENTO CAÓTICO (WEBCORE) */
+        #win1 { top: 10%; left: 5%; width: 320px; }
+        #win2 { top: 40%; left: 55%; width: 350px; }
+        #win3 { top: 15%; left: 50%; width: 280px; }
+        #win4 { bottom: 15%; left: 10%; width: 300px; }
+
+        /* TIPOGRAFÍA Y ESTILOS ESPECÍFICOS */
+        h1 { font-size: 18px; text-decoration: underline; color: var(--wine); }
+        .quote { font-style: italic; border-left: 3px solid var(--wine); padding-left: 10px; margin: 10px 0; }
+        
+        .blink { animation: blinker 1.5s linear infinite; color: var(--wine); font-weight: bold; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        /* BARRA DE TAREAS INFERIOR */
+        .taskbar {
+            position: fixed;
+            bottom: 0; width: 100%;
+            background: #c0c0c0;
+            border-top: 2px solid #fff;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            z-index: 1000;
+            color: #000;
+            font-size: 12px;
+        }
+
+        .start-btn {
+            font-weight: bold;
+            background: #c0c0c0;
+            border: 2px solid #fff;
+            border-right-color: #000;
+            border-bottom-color: #000;
+            padding: 2px 10px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        /* BOTONES 88x31 RETRO */
+        .buttons-area { margin-top: 15px; display: flex; gap: 5px; flex-wrap: wrap; }
+        .btn-88x31 {
+            width: 88px; height: 31px;
+            background: var(--ink);
+            color: #fff;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #fff;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <div class="window">
-        <div class="window-header">POR LOS SIGLOS.exe</div>
-        <div class="window-content">
-            <p>“El tiempo es la sustancia de la que estoy hecho...”</p>
-            <div class="sketch-placeholder">
-                <p style="text-align:center;">[ ESPACIO PARA TU DIBUJO ]</p>
-            </div>
-            <br>
-            <nav>
-                <a href="#">/FILOSOFIA</a> | 
-                <a href="#">/DERECHO</a> | 
-                <a href="#">/ARTE</a>
-            </nav>
+    <div class="window" id="win1">
+        <div class="header"><span>DESASOSIEGO.TXT</span> <span>[X]</span></div>
+        <div class="content">
+            <h1>Bernardo Soares</h1>
+            <p class="quote">"No soy nada. Nunca seré nada. No puedo querer ser nada. Aparte de eso, tengo en mí todos los sueños del mundo."</p>
+            <p>Llevo conmigo las heridas de todas las batallas que evité.</p>
         </div>
     </div>
 
-    <div class="now-playing">
-        ♫ Reproduciendo: Bossa Nova Nights - Stan Getz
+    <div class="window" id="win2">
+        <div class="header"><span>MIS_TRAZOS.JPG</span> <span>[X]</span></div>
+        <div class="content" style="text-align: center;">
+            <div style="border: 1px dashed var(--ink); padding: 40px; margin-bottom: 10px;">
+                [ AQUÍ IRÁN TUS DIBUJOS ]
+                <br><small>(Grayscale Filter Active)</small>
+            </div>
+            <p>Dibujar es una forma de no ser.</p>
+        </div>
+    </div>
+
+    <div class="window" id="win3">
+        <div class="header"><span>REPRODUCTOR_JAZZ.AMP</span> <span>[X]</span></div>
+        <div class="content">
+            <div class="blink">● PLAYING</div>
+            <p style="font-size: 12px; margin: 5px 0;">Stan Getz - Bossa Nova (1962)</p>
+            <hr>
+            <p style="font-size: 10px;">Volumen: ■■■■■■□□□</p>
+        </div>
+    </div>
+
+    <div class="window" id="win4">
+        <div class="header"><span>C:\UNIVERSIDAD\CIVIL_1</span> <span>[X]</span></div>
+        <div class="content">
+            <p>> Modus Ponens detectado...</p>
+            <p>> Analizando Fallo Mendoza...</p>
+            <div class="buttons-area">
+                <div class="btn-88x31" style="background: #7b1113;">LAW STUDENT</div>
+                <div class="btn-88x31" style="background: #1e2a44;">CIORAN FAN</div>
+                <div class="btn-88x31" style="background: #000;">BORGES_VIBES</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="taskbar">
+        <div class="start-btn">Inicio</div>
+        <span>20:46 PM - Siglo XXI</span>
     </div>
 
 </body>
