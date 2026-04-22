@@ -1,10 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Por los siglos de los siglos</title>
+    <meta charset="UTF-8">
+    <style>
+        /* Estética General: Cine & Jazz */
+        body {
+            background-color: #0a0a0a; /* Negro profundo */
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); /* Grano de película */
+            color: #d4d4d4;
+            font-family: 'Courier New', Courier, monospace; /* Fuente tipo guion de cine */
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Ventana con estilo Rock/Noir */
+        .window {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            box-shadow: 10px 10px 0px #000;
+            width: 350px;
+            position: absolute;
+            top: 100px;
+            left: 50px;
+            z-index: 2;
+        }
+
+        .window-header {
+            background: #b02a2a; /* Rojo oscuro (Rock/Vino) */
+            color: white;
+            padding: 5px;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .window-content {
+            padding: 15px;
+            border-top: 1px solid #333;
+        }
+
+        /* Elemento de música (Bossa/Jazz vibe) */
+        .now-playing {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border: 1px dashed #555;
+            padding: 10px;
+            font-size: 11px;
+            background: rgba(0,0,0,0.8);
+        }
+
+        /* Efecto de dibujo/arte */
+        .sketch-placeholder {
+            border: 1px solid #444;
+            filter: grayscale(1) contrast(1.2); /* Efecto Noir para tus dibujos */
+            margin-top: 10px;
+        }
+
+        a { color: #b02a2a; text-decoration: none; }
+        a:hover { background: #fff; color: #000; }
+
+    </style>
 </head>
 <body>
-    <h1>Bienvenido a mi rincón digital</h1>
-    <p>Este es el inicio de mi sitio personal.</p>
+
+    <div class="window">
+        <div class="window-header">POR LOS SIGLOS.exe</div>
+        <div class="window-content">
+            <p>“El tiempo es la sustancia de la que estoy hecho...”</p>
+            <div class="sketch-placeholder">
+                <p style="text-align:center;">[ ESPACIO PARA TU DIBUJO ]</p>
+            </div>
+            <br>
+            <nav>
+                <a href="#">/FILOSOFIA</a> | 
+                <a href="#">/DERECHO</a> | 
+                <a href="#">/ARTE</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="now-playing">
+        ♫ Reproduciendo: Bossa Nova Nights - Stan Getz
+    </div>
+
 </body>
 </html>
