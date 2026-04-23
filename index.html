@@ -48,7 +48,7 @@
             70% { transform:translate(10%, -5%) }
         }
 
-        /* Ventanas */
+        /* Estilo de Ventanas */
         .window {
             position: absolute;
             background: var(--window-bg);
@@ -102,13 +102,7 @@
             overflow-y: auto;
         }
 
-        /* Posiciones */
-        #win-txt { top: 40px; left: 40px; width: 320px; }
-        #win-draw { top: 70px; left: 400px; width: 280px; }
-        #win-music { bottom: 80px; right: 40px; width: 300px; }
-        #win-collage { bottom: 60px; left: 60px; width: 500px; }
-
-        /* Collage */
+        /* Collage de Fotos */
         .collage-container {
             position: relative;
             height: 300px;
@@ -131,7 +125,7 @@
             z-index: 100;
         }
 
-        /* Taskbar */
+        /* Barra de Tareas */
         .taskbar {
             position: fixed;
             bottom: 0; width: 100%;
@@ -164,14 +158,34 @@
             background: #d9d4c7;
         }
 
+        /* Decoración */
         .quote { font-style: italic; border-left: 3px solid var(--wine); padding-left: 10px; margin: 10px 0; font-size: 13px; }
         .blink { animation: blinker 1s linear infinite; }
         @keyframes blinker { 50% { opacity: 0; } }
+
+        /* Botones del reproductor */
+        .player-btn {
+            flex: 1; 
+            cursor: pointer; 
+            border: 2px solid #fff; 
+            border-right-color: #444; 
+            border-bottom-color: #444; 
+            background: #c0c0c0; 
+            font-family: 'Courier New'; 
+            font-size: 11px; 
+            font-weight: bold;
+            padding: 4px;
+        }
+        .player-btn:active {
+            border: 2px solid #444;
+            border-right-color: #fff;
+            border-bottom-color: #fff;
+        }
     </style>
 </head>
 <body>
 
-    <div class="window" id="win-txt">
+    <div class="window" id="win-txt" style="top: 40px; left: 40px; width: 320px;">
         <div class="header"><span>DESASOSIEGO.DOC</span> <div class="close-btn" onclick="closeWin('win-txt')">X</div></div>
         <div class="content">
             <h2 style="font-size: 15px; color: var(--wine); margin-top: 0;">Bernardo Soares</h2>
@@ -180,7 +194,7 @@
         </div>
     </div>
 
-    <div class="window" id="win-draw">
+    <div class="window" id="win-draw" style="top: 70px; left: 400px; width: 280px;">
         <div class="header"><span>RETRATO_NOIR.IMG</span> <div class="close-btn" onclick="closeWin('win-draw')">X</div></div>
         <div class="content" style="text-align: center;">
             <img src="dibujos/dibujos/c1863554-0616-44bc-82c2-90023820f7f1.png" style="width: 100%; filter: contrast(1.3) grayscale(1);">
@@ -188,27 +202,36 @@
         </div>
     </div>
 
-    <div class="window" id="win-music">
+    <div class="window" id="win-music" style="bottom: 80px; right: 40px; width: 300px;">
         <div class="header"><span>BOSSA_PLAYER.EXE</span> <div class="close-btn" onclick="closeWin('win-music')">X</div></div>
-        <div class="content">
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
-                <div class="blink" style="color: var(--wine);">●</div>
-                <marquee scrollamount="3" style="font-size: 11px;">Noir Jazz Station | Bossa Nova Blend | Stan Getz & Joao Gilberto...</marquee>
+        <div class="content" style="background: #c0c0c0;">
+            <div style="background: #000; color: #0f0; padding: 5px; font-family: monospace; font-size: 10px; margin-bottom: 10px; border: 2px inset #888;">
+                <div class="blink" style="float: left; margin-right: 5px;">●</div>
+                <marquee id="track-status" scrollamount="2">SISTEMA LISTO...</marquee>
             </div>
-            <iframe width="100%" height="60" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fdominik-k%2Fbossa-nova-blend%2F" frameborder="0"></iframe>
+
+            <audio id="player" loop>
+                <source src="track1.mp3.mp3" type="audio/mpeg">
+            </audio>
+
+            <div style="display: flex; gap: 5px;">
+                <button class="player-btn" onclick="playAudio()">PLAY</button>
+                <button class="player-btn" onclick="pauseAudio()">STOP</button>
+            </div>
+
+            <div style="margin-top: 10px; height: 6px; background: #888; border: 1px inset #fff;">
+                <div id="progress-bar" style="width: 0%; height: 100%; background: #000080;"></div>
+            </div>
         </div>
     </div>
 
-    <div class="window" id="win-collage">
+    <div class="window" id="win-collage" style="bottom: 60px; left: 60px; width: 500px;">
         <div class="header"><span>FRAGMENTOS.SYS</span> <div class="close-btn" onclick="closeWin('win-collage')">X</div></div>
         <div class="content">
             <div class="collage-container">
                 <img src="dibujos/dibujos/e2b5f955-f018-4cfe-9581-59eb134e9a6e.png" class="collage-photo" style="top: 10px; left: 10px; width: 170px; transform: rotate(-4deg);">
-                
                 <img src="dibujos/dibujos/d358b2a3-3bad-436d-a8f1-7eb5ee5e292b.jpg" class="collage-photo" style="top: 15px; right: 15px; width: 140px; transform: rotate(6deg);">
-                
                 <img src="dibujos/dibujos/220c0c28-4477-4811-a051-eaff9c9d4adf.png" class="collage-photo" style="bottom: 15px; left: 40px; width: 150px; transform: rotate(-2deg);">
-                
                 <img src="dibujos/dibujos/c1863554-0616-44bc-82c2-90023820f7f1.png" class="collage-photo" style="bottom: 30px; right: 30px; width: 120px; transform: rotate(10deg);">
             </div>
         </div>
@@ -221,8 +244,10 @@
     </div>
 
     <script>
+        // Cierre de ventanas
         function closeWin(id) { document.getElementById(id).style.display = 'none'; }
 
+        // Reloj
         function updateClock() {
             const now = new Date();
             document.getElementById('clock').innerText = now.toLocaleTimeString();
@@ -230,7 +255,27 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Sistema de arrastre (Drag) mejorado
+        // Control de Audio
+        const myTrack = document.getElementById('player');
+        const statusText = document.getElementById('track-status');
+        const progress = document.getElementById('progress-bar');
+
+        function playAudio() {
+            myTrack.play();
+            statusText.innerText = "REPRODUCIENDO: TRACK1.MP3.MP3";
+        }
+
+        function pauseAudio() {
+            myTrack.pause();
+            statusText.innerText = "SISTEMA EN PAUSA";
+        }
+
+        myTrack.ontimeupdate = function() {
+            let pos = (myTrack.currentTime / myTrack.duration) * 100;
+            progress.style.width = pos + "%";
+        };
+
+        // Sistema de arrastre (Drag)
         const windows = document.querySelectorAll('.window');
         let activeWin = null;
         let offset = [0,0];
