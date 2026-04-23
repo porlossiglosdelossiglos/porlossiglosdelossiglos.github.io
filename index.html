@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Por los siglos de los siglos | Desasosiego</title>
+    <title>Por los siglos de los siglos | Escritorio Pessoa</title>
     <style>
-        /* PALETA: Tinta, Papel Envejecido, Rojo Vino y Negro Noir */
         :root {
             --paper: #e8e2d4;
             --ink: #1a1a1a;
@@ -17,84 +16,134 @@
         body {
             background-color: var(--ink);
             background-image: 
-                linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
-                url('https://www.transparenttextures.com/patterns/stardust.png'); /* Grano de película */
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px),
+                url('https://www.transparenttextures.com/patterns/stardust.png');
+            background-size: 50px 50px, 50px 50px, auto;
             color: var(--paper);
             font-family: 'Courier New', Courier, monospace;
             margin: 0;
-            overflow: hidden; /* Evita scroll para simular escritorio */
+            overflow: hidden;
             height: 100vh;
             cursor: url('https://cur.cursors-4u.net/others/oth-2/oth191.cur'), auto;
         }
 
-        /* CAPA DE RUIDO CINEMATOGRÁFICO */
-        body::before {
+        /* Efecto de grano de película animado */
+        body::after {
             content: "";
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: -100%; left: -100%; width: 300%; height: 300%;
             background: url(https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Grain.vis.png);
-            opacity: 0.05;
+            opacity: 0.04;
             pointer-events: none;
+            animation: grain 8s steps(10) infinite;
             z-index: 999;
         }
 
-        /* VENTANAS ESTILO RETRO-NOIR */
+        @keyframes grain {
+            0%, 100% { transform:translate(0, 0) }
+            10% { transform:translate(-5%, -10%) }
+            30% { transform:translate(-10%, 5%) }
+            50% { transform:translate(5%, 10%) }
+            70% { transform:translate(10%, -5%) }
+        }
+
+        /* Ventanas */
         .window {
             position: absolute;
             background: var(--window-bg);
             border: 2px solid #fff;
             border-right-color: #444;
             border-bottom-color: #444;
-            box-shadow: 8px 8px 0px rgba(0,0,0,0.5);
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.8);
             color: var(--ink);
-            padding: 2px;
-            z-index: 2;
+            min-width: 250px;
+            animation: fadeIn 0.5s ease-out;
+            z-index: 10;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .header {
             background: linear-gradient(90deg, var(--blue-ink), var(--wine));
             color: white;
-            padding: 4px 8px;
-            font-size: 12px;
+            padding: 5px 10px;
+            font-size: 11px;
             font-weight: bold;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: move;
+            user-select: none;
         }
+
+        .close-btn {
+            background: #c0c0c0;
+            border: 1px solid #444;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+            line-height: 14px;
+            text-align: center;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .close-btn:hover { background: #ff5f56; color: white; }
 
         .content {
             padding: 15px;
             border: 1px inset #fff;
             background: var(--paper);
-            max-height: 400px; /* Aumentado para el collage */
+            max-height: 380px;
             overflow-y: auto;
         }
 
-        /* POSICIONAMIENTO CAÓTICO (WEBCORE) */
-        #win1 { top: 10%; left: 5%; width: 320px; }
-        #win2 { top: 40%; left: 55%; width: 350px; }
-        #win3 { top: 15%; left: 50%; width: 280px; }
-        #win4 { bottom: 10%; left: 5%; width: 500px; z-index: 1; } /* Ventana 4 más grande y al fondo */
+        /* Posiciones */
+        #win-txt { top: 40px; left: 40px; width: 320px; }
+        #win-draw { top: 70px; left: 400px; width: 280px; }
+        #win-music { bottom: 80px; right: 40px; width: 300px; }
+        #win-collage { bottom: 60px; left: 60px; width: 500px; }
 
-        /* TIPOGRAFÍA Y ESTILOS ESPECÍFICOS */
-        h1 { font-size: 18px; text-decoration: underline; color: var(--wine); }
-        .quote { font-style: italic; border-left: 3px solid var(--wine); padding-left: 10px; margin: 10px 0; }
-        
-        .blink { animation: blinker 1.5s linear infinite; color: var(--wine); font-weight: bold; }
-        @keyframes blinker { 50% { opacity: 0; } }
+        /* Collage */
+        .collage-container {
+            position: relative;
+            height: 300px;
+            background: #000;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
 
-        /* BARRA DE TAREAS INFERIOR */
+        .collage-photo {
+            position: absolute;
+            border: 1px solid #fff;
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            filter: grayscale(1) sepia(0.1) contrast(1.1);
+        }
+
+        .collage-photo:hover {
+            filter: grayscale(0) contrast(1);
+            transform: scale(1.1) rotate(0deg) !important;
+            z-index: 100;
+        }
+
+        /* Taskbar */
         .taskbar {
             position: fixed;
             bottom: 0; width: 100%;
             background: #c0c0c0;
             border-top: 2px solid #fff;
-            height: 30px;
+            height: 32px;
             display: flex;
             align-items: center;
-            padding: 0 10px;
+            padding: 0 5px;
             z-index: 1000;
             color: #000;
+            box-sizing: border-box;
             font-size: 12px;
         }
 
@@ -106,101 +155,104 @@
             border-bottom-color: #000;
             padding: 2px 10px;
             margin-right: 10px;
-            cursor: pointer;
         }
 
-        /* ESTILOS DEL COLLAGE DE FOTOS WEBCORE EN #WIN4 */
-        #photo-collage {
-            position: relative;
-            height: 300px;
-            overflow: visible;
+        .clock {
+            margin-left: auto;
+            border: 1px inset #fff;
+            padding: 1px 8px;
+            background: #d9d4c7;
         }
 
-        .collage-photo {
-            position: absolute;
-            border: 1px solid #444;
-            box-shadow: 5px 5px 0px rgba(0,0,0,0.3);
-            filter: grayscale(1) contrast(1.2); /* Efecto Noir base para todas */
-            transition: transform 0.3s;
-        }
-
-        .collage-photo:hover {
-            transform: scale(1.05) rotate(0deg);
-            z-index: 10;
-        }
-
-        /* Filtros artísticos específicos para cada foto */
-        #photo-pirategirl {
-            top: 20px; left: 10px; width: 200px; rotate: -3deg;
-            filter: grayscale(0); /* Mantener su estilo ASCII original */
-        }
-
-        #photo-elvis {
-            top: 10px; right: 10px; width: 150px; rotate: 5deg;
-            filter: sepia(100%) contrast(150%); /* Sepia Noir */
-        }
-
-        #photo-pavese {
-            top: 150px; left: 50%; width: 130px; rotate: 2deg;
-            filter: contrast(120%) brightness(90%) sepia(20%) hue-rotate(280deg); /* Púrpura Noir */
-        }
-
-        #photo-huston {
-            bottom: 10px; left: 20px; width: 140px; rotate: -4deg;
-            filter: sepia(50%) contrast(110%); /* Sepia/Gris Noir con anillo */
-        }
+        .quote { font-style: italic; border-left: 3px solid var(--wine); padding-left: 10px; margin: 10px 0; font-size: 13px; }
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <div class="window" id="win1">
-        <div class="header"><span>DESASOSIEGO.TXT</span> <span>[X]</span></div>
+    <div class="window" id="win-txt">
+        <div class="header"><span>DESASOSIEGO.DOC</span> <div class="close-btn" onclick="closeWin('win-txt')">X</div></div>
         <div class="content">
-            <h1>Bernardo Soares</h1>
+            <h2 style="font-size: 15px; color: var(--wine); margin-top: 0;">Bernardo Soares</h2>
             <p class="quote">"No soy nada. Nunca seré nada. No puedo querer ser nada. Aparte de eso, tengo en mí todos los sueños del mundo."</p>
-            <p>Llevo conmigo las heridas de todas las batallas que evité.</p>
+            <p style="font-size: 12px;">El Jazz es la banda sonora de la soledad acompañada.</p>
         </div>
     </div>
 
-    <div class="window" id="win2">
-        <div class="header"><span>MIS_TRAZOS.JPG</span> <span>[X]</span></div>
+    <div class="window" id="win-draw">
+        <div class="header"><span>RETRATO_NOIR.IMG</span> <div class="close-btn" onclick="closeWin('win-draw')">X</div></div>
         <div class="content" style="text-align: center;">
-            <div style="border: 1px dashed var(--ink); padding: 40px; margin-bottom: 10px;">
-                [ AQUÍ IRÁN TUS DIBUJOS ]
-                <br><small>(Grayscale Filter Active)</small>
-            </div>
-            <p>Dibujar es una forma de no ser.</p>
+            <img src="dibujos/dibujos/c1863554-0616-44bc-82c2-90023820f7f1.png" style="width: 100%; filter: contrast(1.3) grayscale(1);">
+            <p style="font-size: 10px; margin-top: 5px;">“Vivir es ser otro.”</p>
         </div>
     </div>
 
-    <div class="window" id="win3">
-        <div class="header"><span>REPRODUCTOR_JAZZ.AMP</span> <span>[X]</span></div>
+    <div class="window" id="win-music">
+        <div class="header"><span>BOSSA_PLAYER.EXE</span> <div class="close-btn" onclick="closeWin('win-music')">X</div></div>
         <div class="content">
-            <div class="blink">● PLAYING</div>
-            <p style="font-size: 12px; margin: 5px 0;">Mixcloud Example - Bossa Nova Blend</p>
-            <hr>
-            <iframe width="100%" height="60" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fdominik-k%2Fbossa-nova-blend%2F" frameborder="0" ></iframe>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                <div class="blink" style="color: var(--wine);">●</div>
+                <marquee scrollamount="3" style="font-size: 11px;">Noir Jazz Station | Bossa Nova Blend | Stan Getz & Joao Gilberto...</marquee>
+            </div>
+            <iframe width="100%" height="60" src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&feed=%2Fdominik-k%2Fbossa-nova-blend%2F" frameborder="0"></iframe>
         </div>
     </div>
 
-    <div class="window" id="win4">
-        <div class="header"><span>C:\ARCHIVOS\RECUERDOS.GIF</span> <span>[X]</span></div>
+    <div class="window" id="win-collage">
+        <div class="header"><span>FRAGMENTOS.SYS</span> <div class="close-btn" onclick="closeWin('win-collage')">X</div></div>
         <div class="content">
-            <div id="photo-collage">
-                <img src="image_1.png" alt="Pirategirl" class="collage-photo" id="photo-pirategirl">
-                <img src="image_2.png" alt="Elvis & Hasselblad" class="collage-photo" id="photo-elvis">
-                <img src="image_4.png" alt="Pavese fumando" class="collage-photo" id="photo-pavese">
-                <img src="image_5.png" alt="Huston con anillo" class="collage-photo" id="photo-huston">
+            <div class="collage-container">
+                <img src="dibujos/dibujos/e2b5f955-f018-4cfe-9581-59eb134e9a6e.png" class="collage-photo" style="top: 10px; left: 10px; width: 170px; transform: rotate(-4deg);">
+                
+                <img src="dibujos/dibujos/d358b2a3-3bad-436d-a8f1-7eb5ee5e292b.jpg" class="collage-photo" style="top: 15px; right: 15px; width: 140px; transform: rotate(6deg);">
+                
+                <img src="dibujos/dibujos/220c0c28-4477-4811-a051-eaff9c9d4adf.png" class="collage-photo" style="bottom: 15px; left: 40px; width: 150px; transform: rotate(-2deg);">
+                
+                <img src="dibujos/dibujos/c1863554-0616-44bc-82c2-90023820f7f1.png" class="collage-photo" style="bottom: 30px; right: 30px; width: 120px; transform: rotate(10deg);">
             </div>
-            <hr>
-            <p style="font-size: 10px; color: var(--wine); text-align: center;">Instantáneas de un tiempo pasado. Ecos.</p>
         </div>
     </div>
 
     <div class="taskbar">
         <div class="start-btn">Inicio</div>
-        <span>20:46 PM - Siglo XXI</span>
+        <span>porlossiglosdelossiglos.github.io</span>
+        <div class="clock" id="clock">00:00:00</div>
     </div>
 
+    <script>
+        function closeWin(id) { document.getElementById(id).style.display = 'none'; }
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Sistema de arrastre (Drag) mejorado
+        const windows = document.querySelectorAll('.window');
+        let activeWin = null;
+        let offset = [0,0];
+
+        windows.forEach(win => {
+            const header = win.querySelector('.header');
+            header.onmousedown = (e) => {
+                activeWin = win;
+                offset = [win.offsetLeft - e.clientX, win.offsetTop - e.clientY];
+                windows.forEach(w => w.style.zIndex = 10);
+                win.style.zIndex = 100;
+            };
+        });
+
+        document.onmousemove = (e) => {
+            if (activeWin) {
+                activeWin.style.left = (e.clientX + offset[0]) + 'px';
+                activeWin.style.top = (e.clientY + offset[1]) + 'px';
+            }
+        };
+
+        document.onmouseup = () => { activeWin = null; };
+    </script>
 </body>
 </html>
