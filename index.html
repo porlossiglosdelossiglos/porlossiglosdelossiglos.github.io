@@ -48,7 +48,6 @@
             70% { transform:translate(10%, -5%) }
         }
 
-        /* Estilo de Ventanas */
         .window {
             position: absolute;
             background: var(--window-bg);
@@ -102,7 +101,6 @@
             overflow-y: auto;
         }
 
-        /* Collage de Fotos */
         .collage-container {
             position: relative;
             height: 300px;
@@ -125,7 +123,6 @@
             z-index: 100;
         }
 
-        /* Barra de Tareas */
         .taskbar {
             position: fixed;
             bottom: 0; width: 100%;
@@ -158,39 +155,22 @@
             background: #d9d4c7;
         }
 
-        /* Decoración */
         .quote { font-style: italic; border-left: 3px solid var(--wine); padding-left: 10px; margin: 10px 0; font-size: 13px; }
         .blink { animation: blinker 1s linear infinite; }
         @keyframes blinker { 50% { opacity: 0; } }
 
-        /* Botones del reproductor */
         .player-btn {
-            flex: 1; 
-            cursor: pointer; 
-            border: 2px solid #fff; 
-            border-right-color: #444; 
-            border-bottom-color: #444; 
-            background: #c0c0c0; 
-            font-family: 'Courier New'; 
-            font-size: 11px; 
-            font-weight: bold;
-            padding: 4px;
+            flex: 1; cursor: pointer; border: 2px solid #fff; 
+            border-right-color: #444; border-bottom-color: #444; 
+            background: #c0c0c0; font-family: 'Courier New'; 
+            font-size: 11px; font-weight: bold; padding: 4px;
         }
-        .player-btn:active {
-            border: 2px solid #444;
-            border-right-color: #fff;
-            border-bottom-color: #fff;
-        }
+        .player-btn:active { border: 2px solid #444; border-right-color: #fff; border-bottom-color: #fff; }
 
-        /* Estilo del Selector de Canciones */
         #song-select {
-            width: 100%;
-            background: #eee;
-            border: 2px inset #fff;
-            font-family: 'Courier New';
-            font-size: 11px;
-            margin-bottom: 10px;
-            padding: 2px;
+            width: 100%; background: #eee; border: 2px inset #fff;
+            font-family: 'Courier New'; font-size: 11px;
+            margin-bottom: 10px; padding: 2px;
         }
     </style>
 </head>
@@ -227,7 +207,7 @@
             </select>
 
             <audio id="player" loop>
-                <source id="audio-source" src="track1.mp3.mp3" type="audio/mpeg">
+                <source src="track1.mp3.mp3" type="audio/mpeg">
             </audio>
 
             <div style="display: flex; gap: 5px;">
@@ -241,4 +221,85 @@
         </div>
     </div>
 
-    <div class="window" id="win-collage" style="bottom: 60px; left: 60px;
+    <div class="window" id="win-collage" style="bottom: 60px; left: 60px; width: 500px;">
+        <div class="header"><span>FRAGMENTOS.SYS</span> <div class="close-btn" onclick="closeWin('win-collage')">X</div></div>
+        <div class="content">
+            <div class="collage-container">
+                <img src="dibujos/dibujos/e2b5f955-f018-4cfe-9581-59eb134e9a6e.png" class="collage-photo" style="top: 10px; left: 10px; width: 170px; transform: rotate(-4deg);">
+                <img src="dibujos/dibujos/d358b2a3-3bad-436d-a8f1-7eb5ee5e292b.jpg" class="collage-photo" style="top: 15px; right: 15px; width: 140px; transform: rotate(6deg);">
+                <img src="dibujos/dibujos/220c0c28-4477-4811-a051-eaff9c9d4adf.png" class="collage-photo" style="bottom: 15px; left: 40px; width: 150px; transform: rotate(-2deg);">
+                <img src="dibujos/dibujos/c1863554-0616-44bc-82c2-90023820f7f1.png" class="collage-photo" style="bottom: 30px; right: 30px; width: 120px; transform: rotate(10deg);">
+            </div>
+        </div>
+    </div>
+
+    <div class="taskbar">
+        <div class="start-btn">Inicio</div>
+        <span>porlossiglosdelossiglos.github.io</span>
+        <div class="clock" id="clock">00:00:00</div>
+    </div>
+
+    <script>
+        function closeWin(id) { document.getElementById(id).style.display = 'none'; }
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        const myTrack = document.getElementById('player');
+        const statusText = document.getElementById('track-status');
+        const progress = document.getElementById('progress-bar');
+        const songSelect = document.getElementById('song-select');
+
+        function playAudio() {
+            myTrack.play();
+            statusText.innerText = "REPRODUCIENDO: " + songSelect.value.toUpperCase();
+        }
+
+        function pauseAudio() {
+            myTrack.pause();
+            statusText.innerText = "SISTEMA EN PAUSA";
+        }
+
+        function changeSong() {
+            const wasPlaying = !myTrack.paused;
+            myTrack.src = songSelect.value;
+            myTrack.load();
+            statusText.innerText = "CARGANDO: " + songSelect.value.toUpperCase();
+            if (wasPlaying) playAudio();
+        }
+
+        myTrack.ontimeupdate = function() {
+            let pos = (myTrack.currentTime / myTrack.duration) * 100;
+            progress.style.width = pos + "%";
+        };
+
+        // Sistema de arrastre
+        const windows = document.querySelectorAll('.window');
+        let activeWin = null;
+        let offset = [0,0];
+
+        windows.forEach(win => {
+            const header = win.querySelector('.header');
+            header.onmousedown = (e) => {
+                activeWin = win;
+                offset = [win.offsetLeft - e.clientX, win.offsetTop - e.clientY];
+                windows.forEach(w => w.style.zIndex = 10);
+                win.style.zIndex = 100;
+            };
+        });
+
+        document.onmousemove = (e) => {
+            if (activeWin) {
+                activeWin.style.left = (e.clientX + offset[0]) + 'px';
+                activeWin.style.top = (e.clientY + offset[1]) + 'px';
+            }
+        };
+
+        document.onmouseup = () => { activeWin = null; };
+    </script>
+</body>
+</html>
