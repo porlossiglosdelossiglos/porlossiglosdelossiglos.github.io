@@ -28,7 +28,6 @@
             cursor: url('https://cur.cursors-4u.net/others/oth-2/oth191.cur'), auto;
         }
 
-        /* Efecto de grano de película animado */
         body::after {
             content: "";
             position: fixed;
@@ -56,7 +55,7 @@
             border-bottom-color: #444;
             box-shadow: 10px 10px 0px rgba(0,0,0,0.8);
             color: var(--ink);
-            min-width: 250px;
+            min-width: 200px;
             animation: fadeIn 0.5s ease-out;
             z-index: 10;
         }
@@ -101,6 +100,61 @@
             overflow-y: auto;
         }
 
+        /* --- PIXEL ART --- */
+        #pixel-grid {
+            display: grid;
+            grid-template-columns: repeat(16, 10px);
+            grid-template-rows: repeat(16, 10px);
+            gap: 1px;
+            background: #888;
+            border: 2px inset #fff;
+            width: 176px;
+            margin: 0 auto;
+        }
+
+        .pixel {
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            cursor: crosshair;
+        }
+
+        .pixel.active { background: var(--wine); }
+
+        /* --- CALCULADORA --- */
+        .calc-display {
+            width: 100%;
+            background: #889078; /* Verde pantalla LCD vieja */
+            color: #000;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-align: right;
+            padding: 5px;
+            border: 2px inset #fff;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+
+        .calc-btn {
+            background: #c0c0c0;
+            border: 2px solid #fff;
+            border-right-color: #444;
+            border-bottom-color: #444;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 5px;
+        }
+
+        .calc-btn:active { border: 2px solid #444; border-right-color: #fff; border-bottom-color: #fff; }
+
+        /* Collage de Fotos */
         .collage-container {
             position: relative;
             height: 300px;
@@ -165,7 +219,6 @@
             background: #c0c0c0; font-family: 'Courier New'; 
             font-size: 11px; font-weight: bold; padding: 4px;
         }
-        .player-btn:active { border: 2px solid #444; border-right-color: #fff; border-bottom-color: #fff; }
 
         #song-select {
             width: 100%; background: #eee; border: 2px inset #fff;
@@ -176,20 +229,52 @@
 </head>
 <body>
 
-    <div class="window" id="win-txt" style="top: 40px; left: 40px; width: 320px;">
+    <div class="window" id="win-txt" style="top: 20px; left: 20px; width: 300px;">
         <div class="header"><span>DESASOSIEGO.DOC</span> <div class="close-btn" onclick="closeWin('win-txt')">X</div></div>
         <div class="content">
-            <h2 style="font-size: 15px; color: var(--wine); margin-top: 0;">Bernardo Soares</h2>
-            <p class="quote">"No soy nada. Nunca seré nada. No puedo querer ser nada. Aparte de eso, tengo en mí todos los sueños del mundo."</p>
-            <p style="font-size: 12px;">Los poetas, como los ciegos, pueden ver en la oscuridad.</p>
+            <h2 style="font-size: 14px; color: var(--wine); margin-top: 0;">Bernardo Soares</h2>
+            <p class="quote">"No soy nada. Nunca seré nada..."</p>
+            <p style="font-size: 12px;">Los poetas pueden ver en la oscuridad.</p>
         </div>
     </div>
 
-    <div class="window" id="win-draw" style="top: 70px; left: 400px; width: 280px;">
+    <div class="window" id="win-draw" style="top: 50px; left: 350px; width: 250px;">
         <div class="header"><span>RETRATO_NOIR.IMG</span> <div class="close-btn" onclick="closeWin('win-draw')">X</div></div>
         <div class="content" style="text-align: center;">
             <img src="dibujos/dibujos/c1863554-0616-44bc-82c2-90023820f7f1.png" style="width: 100%; filter: contrast(1.3) grayscale(1);">
-            <p style="font-size: 10px; margin-top: 5px;">“Vivir es ser otro.”</p>
+        </div>
+    </div>
+
+    <div class="window" id="win-pixel" style="top: 250px; left: 20px; width: 210px;">
+        <div class="header"><span>INK_SKETCH.EXE</span> <div class="close-btn" onclick="closeWin('win-pixel')">X</div></div>
+        <div class="content" style="text-align: center;">
+            <div id="pixel-grid"></div>
+            <button class="player-btn" style="margin-top: 10px; width: 100%;" onclick="clearGrid()">LIMPIAR TINTA</button>
+        </div>
+    </div>
+
+    <div class="window" id="win-calc" style="top: 20px; right: 50px; width: 180px;">
+        <div class="header"><span>LOGICA_CALC.EXE</span> <div class="close-btn" onclick="closeWin('win-calc')">X</div></div>
+        <div class="content">
+            <div class="calc-display" id="calc-res">0</div>
+            <div class="calc-grid">
+                <button class="calc-btn" onclick="pressCalc('7')">7</button>
+                <button class="calc-btn" onclick="pressCalc('8')">8</button>
+                <button class="calc-btn" onclick="pressCalc('9')">9</button>
+                <button class="calc-btn" onclick="pressCalc('/')" style="background:#ddd">/</button>
+                <button class="calc-btn" onclick="pressCalc('4')">4</button>
+                <button class="calc-btn" onclick="pressCalc('5')">5</button>
+                <button class="calc-btn" onclick="pressCalc('6')">6</button>
+                <button class="calc-btn" onclick="pressCalc('*')" style="background:#ddd">*</button>
+                <button class="calc-btn" onclick="pressCalc('1')">1</button>
+                <button class="calc-btn" onclick="pressCalc('2')">2</button>
+                <button class="calc-btn" onclick="pressCalc('3')">3</button>
+                <button class="calc-btn" onclick="pressCalc('-')" style="background:#ddd">-</button>
+                <button class="calc-btn" onclick="pressCalc('0')">0</button>
+                <button class="calc-btn" onclick="pressCalc('C')" style="background:var(--wine); color:white">C</button>
+                <button class="calc-btn" onclick="pressCalc('=')" style="background:#ddd">=</button>
+                <button class="calc-btn" onclick="pressCalc('+')" style="background:#ddd">+</button>
+            </div>
         </div>
     </div>
 
@@ -200,21 +285,15 @@
                 <div class="blink" style="float: left; margin-right: 5px;">●</div>
                 <marquee id="track-status" scrollamount="2">SISTEMA LISTO...</marquee>
             </div>
-
             <select id="song-select" onchange="changeSong()">
                 <option value="track1.mp3.mp3">Pista 1: Desasosiego I</option>
                 <option value="track2.mp3.mp3">Pista 2: Desasosiego II</option>
             </select>
-
-            <audio id="player" loop>
-                <source src="track1.mp3.mp3" type="audio/mpeg">
-            </audio>
-
+            <audio id="player" loop><source src="track1.mp3.mp3" type="audio/mpeg"></audio>
             <div style="display: flex; gap: 5px;">
                 <button class="player-btn" onclick="playAudio()">PLAY</button>
                 <button class="player-btn" onclick="pauseAudio()">STOP</button>
             </div>
-
             <div style="margin-top: 10px; height: 6px; background: #888; border: 1px inset #fff;">
                 <div id="progress-bar" style="width: 0%; height: 100%; background: #000080;"></div>
             </div>
@@ -242,63 +321,61 @@
     <script>
         function closeWin(id) { document.getElementById(id).style.display = 'none'; }
 
+        // RELOJ
         function updateClock() {
             const now = new Date();
             document.getElementById('clock').innerText = now.toLocaleTimeString();
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateClock, 1000); updateClock();
 
+        // PIXEL ART LOGIC
+        const grid = document.getElementById('pixel-grid');
+        for (let i = 0; i < 256; i++) {
+            const div = document.createElement('div');
+            div.className = 'pixel';
+            div.onclick = function() { this.classList.toggle('active'); };
+            grid.appendChild(div);
+        }
+        function clearGrid() {
+            document.querySelectorAll('.pixel').forEach(p => p.classList.remove('active'));
+        }
+
+        // CALCULATOR LOGIC
+        let calcVal = "";
+        function pressCalc(v) {
+            const res = document.getElementById('calc-res');
+            if (v === 'C') { calcVal = ""; res.innerText = "0"; }
+            else if (v === '=') { try { calcVal = eval(calcVal); res.innerText = calcVal; } catch(e) { res.innerText = "Error"; calcVal = ""; } }
+            else { calcVal += v; res.innerText = calcVal; }
+        }
+
+        // AUDIO LOGIC
         const myTrack = document.getElementById('player');
         const statusText = document.getElementById('track-status');
         const progress = document.getElementById('progress-bar');
         const songSelect = document.getElementById('song-select');
+        function playAudio() { myTrack.play(); statusText.innerText = "REPRODUCIENDO: " + songSelect.value.toUpperCase(); }
+        function pauseAudio() { myTrack.pause(); statusText.innerText = "SISTEMA EN PAUSA"; }
+        function changeSong() { myTrack.src = songSelect.value; myTrack.load(); playAudio(); }
+        myTrack.ontimeupdate = function() { progress.style.width = (myTrack.currentTime / myTrack.duration) * 100 + "%"; };
 
-        function playAudio() {
-            myTrack.play();
-            statusText.innerText = "REPRODUCIENDO: " + songSelect.value.toUpperCase();
-        }
-
-        function pauseAudio() {
-            myTrack.pause();
-            statusText.innerText = "SISTEMA EN PAUSA";
-        }
-
-        function changeSong() {
-            const wasPlaying = !myTrack.paused;
-            myTrack.src = songSelect.value;
-            myTrack.load();
-            statusText.innerText = "CARGANDO: " + songSelect.value.toUpperCase();
-            if (wasPlaying) playAudio();
-        }
-
-        myTrack.ontimeupdate = function() {
-            let pos = (myTrack.currentTime / myTrack.duration) * 100;
-            progress.style.width = pos + "%";
-        };
-
-        // Sistema de arrastre
+        // DRAG SYSTEM
         const windows = document.querySelectorAll('.window');
-        let activeWin = null;
-        let offset = [0,0];
-
+        let activeWin = null; let offset = [0,0];
         windows.forEach(win => {
-            const header = win.querySelector('.header');
-            header.onmousedown = (e) => {
+            win.querySelector('.header').onmousedown = (e) => {
                 activeWin = win;
                 offset = [win.offsetLeft - e.clientX, win.offsetTop - e.clientY];
                 windows.forEach(w => w.style.zIndex = 10);
                 win.style.zIndex = 100;
             };
         });
-
         document.onmousemove = (e) => {
             if (activeWin) {
                 activeWin.style.left = (e.clientX + offset[0]) + 'px';
                 activeWin.style.top = (e.clientY + offset[1]) + 'px';
             }
         };
-
         document.onmouseup = () => { activeWin = null; };
     </script>
 </body>
